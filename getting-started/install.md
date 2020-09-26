@@ -91,7 +91,7 @@ data:
   bucket.service.account.field.name: BOTO_CONFIG
 ```
 
-Finally add the bucket as persistent storage 
+Finally add the bucket as persistent storage:
 
 `kubectl -f apply bucket.yml`
 
