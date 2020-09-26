@@ -173,3 +173,91 @@ Tekton will now start running your `Task`. To see the logs of the last `TaskRun`
 It may take a few moments before your Task completes. When it executes, it should show the following output:
 
 `[hello] Hello World!`
+
+Now let's create a simple pipeline which will run this task; 
+
+```yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: tutorial-pipeline
+spec:
+  tasks:
+    - name: build-hello-task
+      taskRef:
+        name: hello
+```
+
+Now we need a `PipelineRun` for this `Pipeline` to execute; but before we do that we need to add
+
+- A cluster role for deployment
+- A role binding (of course!)
+
+The following YAML defines the cluster role
+
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: tekton-pipelines
+  name: tutorial-role
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "deployments.apps", "replicasets", "pods"]
+  verbs: ["*"]
+```
+
+Now you tell me to to create the cluster role little kubelets.
+
+Let's add a service account for the `TaskRun`
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tutorial-service
+  namespace: tekton-pipelines
+```
+
+If you'ce reached here you remember most of what we had taught so now we go and create the role binding
+
+```yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: tutorial-role-binding
+  namespace: tekton-pipelines
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tutorial-role
+subjects:
+  - kind: ServiceAccount
+    name: tutorial-service
+    namespace: tekton-pipelines
+```
+
+Apply the role binding to kube cluster.
+
+To run the `Pipeline` first creat a `PipelineRun` as follows:
+
+```yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: tutorial-pipeline-run-1
+spec:
+  serviceAccountName: tutorial-service
+  pipelineRef:
+    name: tutorial-pipeline
+```
+
+Apply the `PipelineRun`,the `PipelineRun` automatically defines a corresponding `TaskRun` for each `Task` you have defined in your `Pipeline` collects the results of executing each `TaskRun`.
+
+You can monitor the execution of your PipelineRun in realtime as follows:
+
+`tkn pipelinerun logs tutorial-pipeline-run-1 -f`
+
+To view detailed information about your PipelineRun, use the following command:
+
+`tkn pipelinerun describe tutorial-pipeline-run-1`
