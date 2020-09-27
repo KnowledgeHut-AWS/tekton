@@ -74,7 +74,7 @@ stringData:
 
 Create the config in kubernetes:
 
-`kubectl apply -f secrets.yml`
+`kubectl apply -f secrets.yml -n tekton-pipeline`
 
 Then we add the bucket config
 
@@ -93,7 +93,7 @@ data:
 
 Finally add the bucket as persistent storage:
 
-`kubectl apply -f bucket.yml`
+`kubectl apply -f bucket.yml -n tekton-pipeline`
 
 ## CLI
 
@@ -130,13 +130,13 @@ spec:
 
 Write the YAML above to a file named `task-hello.yaml`, and apply it to your Kubernetes cluster:
 
-`kubectl apply -f task-hello.yaml`
+`kubectl apply -f task-hello.yaml -n tekton-pipeline`
 
 To run this task with Tekton, you need to create a `TaskRun`, which is another Kubernetes object used to specify run time information for a Task.
 
 To view this `TaskRun` object you can run the following Tekton CLI (tkn) command:
 
-`tkn task start hello --dry-run`
+`tkn task start hello --dry-run -n tekton-pipeline`
 
 After running the command above, the following `TaskRun` definition should be shown:
 
@@ -164,7 +164,7 @@ with kubectl:
 
 - create the TaskRun
 
-`kubectl create -f taskRun-hello.yaml`
+`kubectl create -f taskRun-hello.yaml -n tekton-pipeline`
 
 Tekton will now start running your `Task`. To see the logs of the last `TaskRun`, run the following tkn command:
 
