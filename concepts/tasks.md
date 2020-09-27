@@ -177,7 +177,7 @@ steps:
     echo "Hello from Bash!"
 ```
 
-__Exercise__ Create a task and task that executes a simple bash-script, print the output status of the last executed __TaskRun__ (hint: it's sneaking someehre in install.md)
+> __Exercise__ Create a task and task that executes a simple bash-script, print the output status of the last executed __TaskRun__ (hint: it's sneaking somewhere in install.md)
 
 ### Specifying Params in Steps
 
