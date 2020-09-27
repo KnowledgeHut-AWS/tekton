@@ -74,7 +74,7 @@ stringData:
 
 Create the config in kubernetes:
 
-`kubectl -f apply secrets.yml`
+`kubectl apply -f secrets.yml`
 
 Then we add the bucket config
 
@@ -93,7 +93,7 @@ data:
 
 Finally add the bucket as persistent storage:
 
-`kubectl -f apply bucket.yml`
+`kubectl apply -f bucket.yml`
 
 ## CLI
 
