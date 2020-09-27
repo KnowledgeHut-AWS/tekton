@@ -163,8 +163,11 @@ Note: If the script field is present, the step cannot also contain a command fie
 
 Scripts that do not start with a shebang line will have the following default preamble prepended:
 
+```bash
 #!/bin/sh
 set -xe
+```
+
 You can override this default preamble by prepending a shebang that specifies the desired parser. This parser must be present within that Step's container image.
 
 The example below executes a Bash script:
@@ -212,4 +215,4 @@ spec:
       args: ["build", "$(params.flags[*])", "url=$(params.someURL)"]
 ```
 
-__Exercise__ Create a task and task that executes a simple bash-script which takes two paramters as input and prints their value, also print the output status of the last executed __TaskRun__
+__Exercise__ Create a task and task that executes a simple bash-script which takes two paramters as input and prints their value, also print the output status of the last executed __TaskRun_
