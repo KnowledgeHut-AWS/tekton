@@ -210,7 +210,7 @@ rules:
   verbs: ["*"]
 ```
 
-Now you tell me to to create the cluster role little kubelets.
+Now you tell me how to create the cluster role little kubelets ;-).
 
 Let's add a service account for the `TaskRun`
 
