@@ -118,6 +118,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: hello
+  namespace: tekton-pipelines
 spec:
   steps:
     - name: hello
@@ -145,6 +146,7 @@ apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
   generateName: hello-run-
+  namespace: tekton-pipelines
 spec:
   taskRef:
     name: hello
@@ -181,6 +183,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: tutorial-pipeline
+  namespace: tekton-pipelines
 spec:
   tasks:
     - name: build-hello-task
@@ -246,6 +249,7 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   name: tutorial-pipeline-run-1
+  namespace: tekton-pipelines
 spec:
   serviceAccountName: tutorial-service
   pipelineRef:

@@ -1,3 +1,6 @@
 [submodule "sandbox"]
 	path = sandbox
 	url = git@github.com:KnowledgeHut-AWS/sandbox.git
+[submodule "kube-cluster"]
+	path = kube-cluster
+	url = git@github.com:KnowledgeHut-AWS/vault-on-k8s.git
