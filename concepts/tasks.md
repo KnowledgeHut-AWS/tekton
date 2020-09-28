@@ -215,4 +215,4 @@ spec:
       args: ["build", "$(params.flags[*])", "url=$(params.someURL)"]
 ```
 
-__Exercise__ Create a task and task that executes a simple bash-script which takes two paramters as input and prints their value, also print the output status of the last executed __TaskRun_
+__Exercise__ Create a task and task that executes a simple bash-script which takes two paramters as input and prints their value, also print the output status of the last executed __TaskRun__

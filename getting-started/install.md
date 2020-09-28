@@ -131,13 +131,13 @@ spec:
 
 Write the YAML above to a file named `task-hello.yaml`, and apply it to your Kubernetes cluster:
 
-`kubectl apply -f task-hello.yaml -n tekton-pipeline`
+`kubectl apply -f task-hello.yaml -n tekton-pipelines`
 
 To run this task with Tekton, you need to create a `TaskRun`, which is another Kubernetes object used to specify run time information for a Task.
 
 To view this `TaskRun` object you can run the following Tekton CLI (tkn) command:
 
-`tkn task start hello --dry-run -n tekton-pipeline`
+`tkn task start hello --dry-run -n tekton-pipelines`
 
 After running the command above, the following `TaskRun` definition should be shown:
 
