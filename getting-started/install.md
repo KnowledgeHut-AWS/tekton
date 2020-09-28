@@ -176,7 +176,7 @@ It may take a few moments before your Task completes. When it executes, it shoul
 
 `[hello] Hello World!`
 
-Now let's create a simple pipeline which will run this task; 
+Now let's create a simple pipeline which will run this task;
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
