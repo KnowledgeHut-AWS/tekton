@@ -378,7 +378,11 @@ spec:
         echo -n "$RESULT_SHA" > $(results.commit.path)
 ```
 
-Create the `Task` above then the following `TaskRun`
+Create the `Task` above
+
+`kubectl apply -f git-clone.yml -n tekton-pipelines`
+
+You can use a task run as follows to see how the `git-clone` task works.
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
