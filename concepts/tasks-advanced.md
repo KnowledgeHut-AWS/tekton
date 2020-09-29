@@ -15,7 +15,7 @@ metadata:
   name: show-non-root-steps
 spec:
   steps:
-    # no securityContext specified so will use 
+    # no securityContext specified so will use
     # securityContext from TaskRun podTemplate
     - name: show-user-1001
       image: ubuntu
@@ -127,7 +127,7 @@ data:
   test.data: tasks are my jam
 ```
 
-Followed by a `TaskRun` that reads data from this volume 
+Followed by a `TaskRun` that reads data from this volume
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -295,4 +295,3 @@ spec:
 ```
 
 > __Exercise__: complete the pre-requisites for this run to execute it successfully. How will you check if the repository is cloned?
-
