@@ -171,5 +171,60 @@ To view detailed information about your PipelineRun, use the following command:
 
 ## Pipeline with resources
 
-In the real world you'll never really be lucky enough to create add and multiply pipelines, so let's look at the more realistc example. Here, we will clone source for a git repository and run a maven build.
+In the real world you'll never really be lucky enough to create add and multiply pipelines, so let's look at the more realistc example. Here, we will clone source for a git repository and run custom tasks on it:
+
+```yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cat-branch-readme
+spec:
+  params:
+  - name: repo-url
+    type: string
+    description: The git repository URL to clone from.
+  - name: branch-name
+    type: string
+    description: The git branch to clone.
+  workspaces:
+  - name: shared-data
+    description: |
+      This workspace will receive the cloned git repo and be passed
+      to the next Task for the repo's README.md file to be read.
+  tasks:
+  - name: fetch-repo
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-data
+    params:
+    - name: url
+      value: $(params.repo-url)
+    - name: revision
+      value: $(params.branch-name)
+  - name: cat-readme
+    runAfter: ["fetch-repo"] # Wait until the clone is done before reading the readme.
+    workspaces:
+    - name: source
+      workspace: shared-data
+    taskSpec:
+      workspaces:
+      - name: source
+      steps:
+      - image: zshusers/zsh:4.3.15
+        script: |
+          #!/usr/bin/env zsh
+          cat $(workspaces.source.path)/README.md
+  ```
+
+This example takes a git repository and a branch name and prints the README.md file from that branch. This is an example Pipeline demonstrating the following:
+
+- Using the git-clone catalog Task to clone a branch
+- Passing a cloned repo to subsequent Tasks using a Workspace
+- Ordering Tasks in a Pipeline using "runAfter" so that git-clone completes before we try to read from the Workspace
+- Using a volumeClaimTemplate Volume as a Workspace
+- Avoiding hard-coded paths by using a Workspace's path variable instead
+
+> __Exercise:__ create a pipeline run configuration for the following Pipeline example from the advanced tasks section
 

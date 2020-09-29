@@ -200,9 +200,33 @@ spec:
 
 `tkn taskrun logs --last -f -n tekton-pipelines`
 
+You can enforce a workspace to be read only by using:
+
+```yaml
+    workspaces:
+    - name: write-disallowed
+      readOnly: true
+```
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kh-pvc-2
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+```
+
+> __Exercise:__ Create a Task or TaskRun that uses the above workspace as both ReadWrite and ReadOnly in different steps.
+
 ## Using Resources
 
-> __Note__: Resources are depcreated use with caution, most of the resources are replaces by Catalog tasks now
+> __Note__: Resources are depcreated, use with caution, most of the resources are replaced by Catalog tasks now
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -239,8 +263,36 @@ To see the results run
 
 `tkn taskrun logs --last -f`
 
-Let's understand what happneded here, ofoucrse we defined a resource under a task run but let's understand the things under the hood:
+Let's understand what happneded here, ofcourse we defined a resource under a task run but let's understand the things under the hood:
 
 1. We defined the resource, `input` to be precise, as we needed the __git repositroy__ code to do some work
 2. We're passing params to the resource definiton to define details of the git repository we want to use
+
+## Using `git-clone` task instead of Git Resource
+
+Given `Tekton` has deprecated resources, it is important to learn catalog tasks which can replace the resources, `git-clone`
+is one such task.
+
+```yaml
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  generateName: git-clone-run-
+  namespace: tekton-pipelines
+spec:
+  taskRef:
+  name: git-clone
+  workspaces:
+  - name: output # must match workspace name in the Task
+    persistentVolumeClaim:
+      claimName: mypvc # this PVC must already exist
+    subPath: clone
+  params:
+  - name: url
+    value: https://github.com/KnowledgeHut-AWS/katacoda-labs
+  - name: revision
+    value: master
+```
+
+> __Exercise__: complete the pre-requisites for this run to execute it successfully. How will you check if the repository is cloned?
 
