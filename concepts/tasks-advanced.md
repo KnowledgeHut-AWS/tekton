@@ -392,11 +392,11 @@ metadata:
   namespace: tekton-pipelines
 spec:
   taskRef:
-  name: git-clone
+   name: git-clone
   workspaces:
   - name: output # must match workspace name in the Task
     persistentVolumeClaim:
-      claimName: mypvc # this PVC must already exist
+      claimName: kh-git-clone-pvc # this PVC must already exist
     subPath: clone
   params:
   - name: url
