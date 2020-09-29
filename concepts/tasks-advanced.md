@@ -81,7 +81,7 @@ spec:
     kind: ClusterTask
 ```
 
-## Passing results of taks to another task
+## Passing results of a task to another
 
 This can be done by emitting results.
 
@@ -263,10 +263,12 @@ To see the results run
 
 `tkn taskrun logs --last -f`
 
-Let's understand what happneded here, ofcourse we defined a resource under a task run but let's understand the things under the hood:
+Let's understand what happened here, of-course we defined a resource under a `TaskRun` but let's understand the things under the hood:
 
 1. We defined the resource, `input` to be precise, as we needed the __git repositroy__ code to do some work
 2. We're passing params to the resource definiton to define details of the git repository we want to use
+
+Let's see how this resource is replacs by a catalogue `Task` in `v1beta1` API.
 
 ## Using `git-clone` task instead of Git Resource
 
