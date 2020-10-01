@@ -50,7 +50,7 @@ specified in the `Secret`. When the `Steps` execute, Tekton uses those credentia
      annotations:
        tekton.dev/git-0: https://github.com # Described below
    type: kubernetes.io/basic-auth
-   stringData:
+   data:
      username: <cleartext username>
      password: <cleartext password>
    ```
@@ -120,7 +120,7 @@ specified in the `Run`.
      annotations:
        tekton.dev/git-0: github.com # Described below
    type: kubernetes.io/ssh-auth
-   stringData:
+   data:
      ssh-privatekey: <private-key>
      # This is non-standard, but its use is encouraged to make this more secure.
      # If it is not provided then the git server's public key will be requested
@@ -197,7 +197,7 @@ metadata:
   annotations:
     tekton.dev/git-0: example.com:2222
 type: kubernetes.io/ssh-auth
-stringData:
+data:
   ssh-privatekey: <private-key>
   known_hosts: <known-hosts>
 ```
@@ -240,7 +240,7 @@ the credentials specified in the `Secret`. When the `Steps` execute, Tekton uses
      annotations:
        tekton.dev/docker-0: https://gcr.io # Described below
    type: kubernetes.io/basic-auth
-   stringData:
+   data:
      username: <cleartext username>
      password: <cleartext password>
    ```
